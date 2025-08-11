@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import LoginPage from "./pages/loginPage";
 import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css'
 import { AdminContext } from "./context/AdminContext";
 import Navbar from "./components/common/Navbar";
 import Sidebar from "./components/common/Sidebar";

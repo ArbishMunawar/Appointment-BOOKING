@@ -21,3 +21,5 @@ const adminAuth = (req, res, next) => {
 };
 
 export default adminAuth;
+
+

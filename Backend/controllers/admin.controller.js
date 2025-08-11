@@ -72,10 +72,10 @@ const addDoctor = async (req, res) => {
     const newDoctor = new doctorModel(doctorData);
     await newDoctor.save();
 
-    res.status(201).json({ message: "Doctor added successfully" });
+    res.status(201).json({ message: "Doctor added successfully",success: true, });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Failed to add doctor" });
+    res.status(500).json({ error: "Failed to add doctor",success: false, });
   }
 };
 
@@ -87,12 +87,12 @@ const adminLogin = async (req, res) => {
 
     // Check if email and password are provided
     if (!email || !password) {
-      return res.status(400).json({ error: "Email and password are required" });
+      return res.status(400).json({ error: "Email and password are required" ,success: true,});
     }
 
     // Validate email format
     if (!validator.isEmail(email)) {
-      return res.status(400).json({ error: "Invalid email format" });
+      return res.status(400).json({ error: "Invalid email format" ,success: false,});
     }
 
     // Check if the admin credentials match
