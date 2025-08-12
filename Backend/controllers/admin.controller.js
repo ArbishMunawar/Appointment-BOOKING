@@ -13,8 +13,9 @@ const addDoctor = async (req, res) => {
       speciality,
       address,
       degree,
+      about,
       experience,
-      phone,
+      fees
     } = req.body;
     const imageFile = req.file;
 
@@ -27,8 +28,8 @@ const addDoctor = async (req, res) => {
       !address ||
       !degree ||
       !experience ||
-      !phone ||
-      !imageFile
+      !about ||
+       !fees
     ) {
       return res.status(400).json({ error: "All fields are required" });
     }
@@ -62,9 +63,8 @@ const addDoctor = async (req, res) => {
       speciality,
       degree,
       experience,
-      about: req.body.about || "",
-      available: req.body.available || false,
-      fees: req.body.fees || 0,
+      about,
+      fees,
       address: JSON.parse(address),
       date: Date.now(),
     };
@@ -111,4 +111,17 @@ const adminLogin = async (req, res) => {
   }
 };
 
-export { addDoctor, adminLogin };
+// //api to get all doctors list
+
+const allDoctors=async(req,res)=>{
+try{
+const doctors=await doctorModel.find({}).select('-password')
+res.json({success:true,doctors})
+}
+catch(error){
+   console.error("Admin login error:", error);
+    res.status(500).json({ message: error.message,success:"false" });
+}
+}
+
+export { addDoctor, adminLogin,allDoctors };

@@ -48,16 +48,28 @@ const AddDoctor = () => {
       // console.log("Backend URL is:", backendUrl);
       const { data } = await axios.post(
         backendUrl + "/api/admin/add-doctor",
-        formData,{headers:{aToken}}
+        formData,
+        { headers: { aToken } }
       );
 
       if (data.success) {
         toast.success(data.message);
-        // console.log(data.success, "successs");
+        setDocImg(false);
+        setName("");
+        setPassword("");
+        setEmail("");
+        setAddress1("");
+        setAddress2("");
+        setDegree("");
+        setAbout("");
+        setFees("");
       } else {
         toast.error(data.message);
       }
-    } catch (error) {}
+    } catch (error) {
+      toast.error(error.message);
+      console.log(error)
+    }
   };
 
   return (

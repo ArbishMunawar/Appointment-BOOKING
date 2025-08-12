@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 
 const LoginPage = () => {
   const [state, setState] = React.useState("Admin");
-  const { setToken, backendUrl } = useContext(AdminContext);
+  const { setAToken, backendUrl } = useContext(AdminContext);
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
 
@@ -22,7 +22,8 @@ const LoginPage = () => {
        
         if (data.success) {
           localStorage.setItem('aToken',data.token)
-          setToken(data.token);
+          setAToken(data.token);
+          // toast.errorerror(data.message)
         
         }else{
           toast.error(data.message)
