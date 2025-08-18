@@ -9,7 +9,8 @@ const AdminContextProvider = ({ children }) => {
   );
   const [doctors, setDoctors] = useState([]);
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
-
+  const [appointments, setAppointments] = useState([]);
+  const [dashData, setDashData] = useState(false);
   const getAllDoctors = async () => {
     try {
       const { data } = await axios.post(
@@ -46,6 +47,58 @@ const AdminContextProvider = ({ children }) => {
     }
   };
 
+  const getAllAppointments = async () => {
+    try {
+      const { data } = await axios.get(backendUrl + "/api/admin/appointments", {
+        headers: { aToken },
+      });
+      if (data.success) {
+        setAppointments(data.appointments);
+        console.log(data.appointments);
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
+  const cancelAppointment = async (appointmentId) => {
+    try {
+      const { data } = await axios.post(
+        backendUrl + "/api/admin/cancel-appointment",
+        { appointmentId },
+        {
+          headers: { aToken },
+        }
+      );
+      if (data.success) {
+        getAllAppointments();
+        // console.log(data.appointments);
+        toast.success(data.message);
+
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+const getDashData=async()=>{
+ try {
+      const { data } = await axios.get(backendUrl + "/api/admin/dashboard", {
+        headers: { aToken },
+      });
+      if (data.success) {
+        setDashData(data.dashData);
+        console.log(data.dashData);
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+}
   const value = {
     aToken,
     setAToken,
@@ -53,6 +106,12 @@ const AdminContextProvider = ({ children }) => {
     doctors,
     getAllDoctors,
     changeAvailability,
+    getAllAppointments,
+    appointments,
+    setAppointments,
+    cancelAppointment,
+    dashData,
+    getDashData
   };
   return (
     <AdminContext.Provider value={value}>{children}</AdminContext.Provider>

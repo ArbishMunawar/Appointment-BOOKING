@@ -14,9 +14,9 @@ const doctorSchema = new mongoose.Schema(
     fees: { type: Number, default: true },
     address: { type: Object, required: true },
     date: { type: Number, required: true },
-    slots_booked: { type: Object, default: {} },
+   slots_booked: { type: Object, default: {} },
   },
-  { minimize: false} 
+  { minimize: false, timestamps:true} 
 );
 
 export default mongoose.model("doctor", doctorSchema);
